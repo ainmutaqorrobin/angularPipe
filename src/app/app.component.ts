@@ -6,7 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  filteredStatus=''
+  appStatus = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('stable');
+      reject('cannot read');
+    }, 2000);
+  });
+  
+  filteredStatus = '';
+
   servers = [
     {
       instanceType: 'medium',
@@ -44,5 +52,14 @@ export class AppComponent {
       'list-group-item-warning': server.status === 'offline',
       'list-group-item-danger': server.status === 'critical',
     };
+  }
+
+  onAddServer() {
+    this.servers.push({
+      instanceType: 'medium',
+      name: 'Robin Environment Server',
+      status: 'offline',
+      started: new Date(15, 1, 2017),
+    });
   }
 }
